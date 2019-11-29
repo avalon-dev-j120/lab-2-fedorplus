@@ -61,17 +61,17 @@ public class Task1 implements Task {
             byte[] t = new byte[4096];
             int len = 0;
             
-//            while((len = buf.read(t)) > 0) {
-//                text.write(t, 0, len);
-//            }
-            
-            while ( buf.read() != -1) {
-                len = t.length <= buf.available() ? t.length : buf.available();
-//            if (t.length <= buf.available()){len = t.length;}
-//            else {len  = buf.available();};
-                buf.read(t);
-                text.write(t, 0, len );
+            while((len = buf.read(t)) > 0) {
+                text.write(t, 0, len);
             }
+            
+//            while ( buf.read() != -1) {
+//                len = t.length <= buf.available() ? t.length : buf.available();
+////            if (t.length <= buf.available()){len = t.length;}
+////            else {len  = buf.available();};
+//                buf.read(t);
+//                text.write(t, 0, len );
+//            }
             
             String text1  = new String(text.toByteArray());
             return text1;

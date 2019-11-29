@@ -61,6 +61,9 @@ public class Country {
         /*
          * TODO(Студент): Реализовать метод valueOf класса Country
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        if (text.split(":").length == 2 ){
+            return new Country(text.split(":")[0], text.split(":")[1]);
+        } else {throw new ParseException("Wrong format", 0);}
+        
     }
 }
