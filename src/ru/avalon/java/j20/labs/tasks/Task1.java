@@ -2,14 +2,13 @@ package ru.avalon.java.j20.labs.tasks;
 
 import ru.avalon.java.j20.labs.Task;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Задание №1
  *
- * <p>Тема: "Потоковый ввод-вывод. Чтение и запись данных
- * в двоичном режиме".
+ * <p>
+ * Тема: "Потоковый ввод-вывод. Чтение и запись данных в двоичном режиме".
  */
 public class Task1 implements Task {
 
@@ -18,7 +17,7 @@ public class Task1 implements Task {
      */
     @Override
     public void run() throws IOException {
-        File input = new File("assets/countries.txt");
+        File input = new File("../assets/countries.txt");
         File output = new File("countries_binary_mode_output.txt");
         String text = read(input);
         write(output, text);
@@ -46,26 +45,52 @@ public class Task1 implements Task {
     /**
      * Выполняет чтение указанного файла в двоичном режиме.
      *
-     * <p>Весь текст файла возвращается в виде одного
-     * экземпляра типа {@link String}.
+     * <p>
+     * Весь текст файла возвращается в виде одного экземпляра типа
+     * {@link String}.
      *
      * @param file файл
      * @return содержимое файла в виде текста.
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private String read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+
+        try (
+                ByteArrayOutputStream text = new ByteArrayOutputStream();
+                FileInputStream buf = new FileInputStream(file);) {
+            byte[] t = new byte[4096];
+            int len = 0;
+            
+            while((len = buf.read(t)) > 0) {
+                text.write(t, 0, len);
+            }
+            
+//            while ( buf.read() != -1) {
+//                len = t.length <= buf.available() ? t.length : buf.available();
+////            if (t.length <= buf.available()){len = t.length;}
+////            else {len  = buf.available();};
+//                buf.read(t);
+//                text.write(t, 0, len );
+//            }
+            
+            String text1  = new String(text.toByteArray());
+            return text1;
+        }
     }
 
     /**
-     * Выполняет запись текстоых данных в файл в двоичном
-     * режиме.
+     * Выполняет запись текстоых данных в файл в двоичном режиме.
      *
      * @param file файл
      * @param text текст
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, String text) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        try (
+                FileOutputStream buf = new FileOutputStream(file);) {
+            byte[] t = text.getBytes();
+            buf.write(t, 0, t.length);                
+            }
+        
     }
 }

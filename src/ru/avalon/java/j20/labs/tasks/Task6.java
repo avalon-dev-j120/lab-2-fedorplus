@@ -1,10 +1,14 @@
 package ru.avalon.java.j20.labs.tasks;
 
+import java.io.BufferedReader;
 import ru.avalon.java.j20.labs.Task;
 import ru.avalon.java.j20.labs.models.Country;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -20,8 +24,9 @@ public class Task6 implements Task {
      */
     @Override
     public void run() throws IOException {
-        File input = new File("assets/countries.txt");
+        File input = new File("../assets/countries.txt");
         Collection<Country> countries = read(input);
+        countries.isEmpty();
 
         /*
          * TODO(Студент): Выполнить задание №6
@@ -48,6 +53,17 @@ public class Task6 implements Task {
      * @throws IOException в случае ошибки ввода-вывода.
      */
     private Collection<Country> read(File file) throws IOException {
-        throw new UnsupportedOperationException("Not implement yet!");
+        
+        Collection<Country> result = new ArrayList<>();
+        try(FileReader reader = new FileReader(file);
+                BufferedReader in = new BufferedReader(reader);){
+            String line;
+            while((line= in.readLine()) != null){
+               result.add(Country.valueOf(line));
+            }            
+        } catch (ParseException e){
+            System.out.println(e.getMessage());             
+    }
+              return result;        
     }
 }
